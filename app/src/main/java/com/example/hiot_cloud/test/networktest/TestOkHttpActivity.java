@@ -2,6 +2,7 @@ package com.example.hiot_cloud.test.networktest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ import okhttp3.Response;
 public class TestOkHttpActivity extends AppCompatActivity {
 
 //    private static final String basUrl = "http://www.baidu.com/";
-private static final String basUrl = "http://114.67.88.191:8080/";
+    private static final String basUrl = "http://114.67.88.191:8080/";
     private static final String TAG = "TestOkHttpActivity";
 
     @Override
@@ -66,7 +67,7 @@ private static final String basUrl = "http://114.67.88.191:8080/";
         btnGetUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUserInfo("");
+                getUserInfo("e82a427684dd4632988c5e9bd864ee04_7658ff8ca40d4925b06b4fb1889499bd_use");
             }
         });
 
@@ -75,7 +76,17 @@ private static final String basUrl = "http://114.67.88.191:8080/";
         btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateEmail("authorization","email");
+                updateEmail("e82a427684dd4632988c5e9bd864ee04_7658ff8ca40d4925b06b4fb1889499bd_use","clxtest@qq.com");
+            }
+        });
+
+        //跳转Retrofit
+        Button btnRetrofit = findViewById(R.id.btn_new_retrofit);
+        btnRetrofit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TestOkHttpActivity.this,TestRetrofitActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -89,7 +100,7 @@ private static final String basUrl = "http://114.67.88.191:8080/";
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody body = new FormBody.Builder().build();
         String url = basUrl + "/user/email?email=" + email;
-        Request request = new Request.Builder().post(body).url(url)
+        Request request = new Request.Builder().put(body).url(url)
                 .header("Authorization",authorization).build();
         callEnqueue(okHttpClient, request);
     }

@@ -34,7 +34,7 @@ public class TestRetrofitActivity extends AppCompatActivity {
         createRetrofit();
 
         //百度
-        Button btnTest = findViewById(R.id.btn_retrofit_enqueue);
+        Button btnTest = findViewById(R.id.btn_retrofit_baidu);
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +46,7 @@ public class TestRetrofitActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login("clxtest","clxtest","app");
+                login("clxtest2","adminadmin","app");
             }
         });
         //用户信息
@@ -54,7 +54,7 @@ public class TestRetrofitActivity extends AppCompatActivity {
         btnUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUserInfo("authorization");
+                getUserInfo("e82a427684dd4632988c5e9bd864ee04_740082e714e14814bf8c2404fed88866_use");
             }
         });
         //修改邮箱
@@ -62,7 +62,7 @@ public class TestRetrofitActivity extends AppCompatActivity {
         btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateEmail("authorization","email");
+                updateEmail("e82a427684dd4632988c5e9bd864ee04_740082e714e14814bf8c2404fed88866_use","clx@qq.com");
             }
         });
 
@@ -81,10 +81,10 @@ public class TestRetrofitActivity extends AppCompatActivity {
      */
     private void register() {
         UserBean userBean = new UserBean();
-        userBean.setUsername("");
-        userBean.setEmail("");
-        userBean.setPassword("");
-        userBean.setUserType("");
+        userBean.setUsername("clxtest2");
+        userBean.setEmail("clxclx@qq.com");
+        userBean.setPassword("adminadmin");
+        userBean.setUserType("1");
         Call<ResponseBody> call = service.register(userBean);
         callEnqueue(call);
     }

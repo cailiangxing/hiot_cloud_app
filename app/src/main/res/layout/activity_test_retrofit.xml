@@ -8,8 +8,8 @@
     tools:context=".test.networktest.TestRetrofitActivity">
 
     <Button
-        android:id="@+id/btn_retrofit_enqueue"
-        android:text="enqueue"
+        android:id="@+id/btn_retrofit_baidu"
+        android:text="百度"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
