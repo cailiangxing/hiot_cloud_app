@@ -48,11 +48,17 @@ public class TestGsonActivity extends AppCompatActivity {
         btnToJson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Student student2 = new Student();
-                student2.setAge(50);
-                student2.setName("张三");
-                student2.setMarried(true);
-                String json = gson.toJson(student2);
+//                Student student2 = new Student();
+//                student2.setAge(50);
+//                student2.setName("李四");
+//                student2.setMarried(true);
+//                String json = gson.toJson(student2);
+                Experiment experiment = new Experiment();
+                experiment.setName("李四");
+                experiment.setHeight(175);
+                experiment.setId(101);
+                experiment.setGraduation(true);
+                String json = gson.toJson(experiment);
                 Log.d(TAG, "onClick: "+json);
             }
         });
@@ -133,19 +139,18 @@ public class TestGsonActivity extends AppCompatActivity {
                 String json = "{\n" +
                         "\t\"data\":\n" +
                         "\t{\n" +
-                        "\t\t\"age\": 20,\n" +
-                        "\t\t\"married\": false,\n" +
+                        "\t\t\"id\": 101,\n" +
+                        "\t\t\"graduated\": true,\n" +
+                        "\t\t\"height\":180,\n" +
                         "\t\t\"name\": \"张三\"\n" +
                         "\t},\n" +
                         "\t\"status\":1,\n" +
-                        "\t\"msg\":\"正常\"\n" +
+                        "\t\"msg\":\"\"\n" +
                         "}";
-                Type type = new TypeToken<ResultBase<Student>>(){}.getType();
-                ResultBase<Student> resultBase = gson.fromJson(json,type);
-                String str = String.format("姓名：%s,年龄：%d,婚否：%b", resultBase.data.getName(), resultBase.data.getAge(),
-                        resultBase.data.isMarried());
+                Type type = new TypeToken<ResultBase<Experiment>>(){}.getType();
+                ResultBase<Experiment> resultBase = gson.fromJson(json,type);
+                String str = String.format("姓名：%s,ID：%d,身高：%d,是否毕业：%b", resultBase.data.getName(), resultBase.data.getId(),resultBase.data.getHeight(),resultBase.data.isGraduation());
                 Toast.makeText(TestGsonActivity.this , str , Toast.LENGTH_SHORT).show();
-
             }
         });
     }

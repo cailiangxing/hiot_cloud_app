@@ -24,4 +24,13 @@ public class Constans {
      * 主页viewpager消息fragment选择序号 mine
      */
     public static final int MAIN_VIEWPAGER_INDEX_MINE = 3;
+
+    /**
+     * APP登录标识
+     */
+    public static  final String LOGIN_CODE_APP = "app";
+    /**
+     *注册用户类型
+     */
+    public static final String REGISTER_TYPE_NORMAL = "1";
 }

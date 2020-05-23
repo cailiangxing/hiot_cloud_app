@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hiot_cloud.R;
-import com.example.hiot_cloud.data.NetService;
+import com.example.hiot_cloud.data.NetworkService;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -26,7 +26,7 @@ public class TestRxJavaActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
 
-    private NetService service;
+    private NetworkService service;
     private static final String TAG="TestRxJavaActivity";
     private EditText etToken;
 
@@ -63,7 +63,7 @@ public class TestRxJavaActivity extends AppCompatActivity {
         btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getUpdateEmail("e82a427684dd4632988c5e9bd864ee04_a889993db11e42ebab496210a2972cf8_use","clx555@qq.com");
             }
         });
         //注册
@@ -71,10 +71,89 @@ public class TestRxJavaActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                register();
             }
         });
     }
+
+    /**
+     * 注册
+     */
+    private void register() {
+        UserBean userBean = new UserBean();
+        userBean.setUsername("clxtest3");
+        userBean.setEmail("clx333@qq.com");
+        userBean.setPassword("adminadmin");
+        userBean.setUserType("1");
+        service.register(userBean).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultBase<UserBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultBase<UserBean> resultBase) {
+                        if (resultBase != null && resultBase.getData() != null){
+                            Log.d( TAG, "onNext:"  );
+                        }
+                        Log. d( TAG ,resultBase. getMsg()) ;
+                        if(resultBase != null && !TextUtils.isEmpty(  resultBase.getMsg())){
+                            Toast.makeText( TestRxJavaActivity.this, resultBase.getMsg(), Toast.LENGTH_SHORT ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: "+e.getMessage(),e );
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 修改邮箱
+     * @param authorization
+     * @param email
+     */
+    private void getUpdateEmail(String authorization, String email) {
+        service.updateEmail(authorization,email).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultBase<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultBase<String> resultBase) {
+                        if (resultBase != null && resultBase.getData() != null){
+                            String string = resultBase.getData();
+                            Log.d( TAG, "onNext:"  );
+                        }
+                        Log. d( TAG ,resultBase. getMsg()) ;
+                        if(resultBase != null && !TextUtils.isEmpty(  resultBase.getMsg())){
+                            Toast.makeText( TestRxJavaActivity.this, resultBase.getMsg(), Toast.LENGTH_SHORT ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onRrror:" + e.getMessage(),e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     /**
      * 获取用户信息
@@ -157,6 +236,6 @@ public class TestRxJavaActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        service = retrofit.create(NetService.class);
+        service = retrofit.create(NetworkService.class);
     }
 }

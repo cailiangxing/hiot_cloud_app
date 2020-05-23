@@ -21,6 +21,7 @@ import com.example.hiot_cloud.UI.main.MainActivity;
 import com.example.hiot_cloud.injection.PerActivity;
 import com.example.hiot_cloud.injection.module.ActivityModule;
 import com.example.hiot_cloud.test.MVPtest.TestMvpActivity;
+import com.example.hiot_cloud.test.networktest.TestNetworkPackActivity;
 
 import dagger.Component;
 
@@ -37,6 +38,8 @@ public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 
     void inject(TestMvpActivity testMvpActivity);
+
+    void inject(TestNetworkPackActivity activity);
 
     @Component.Builder
     interface ActivityComponentBuilder {
