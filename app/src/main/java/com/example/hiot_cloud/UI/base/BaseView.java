@@ -5,4 +5,10 @@ package com.example.hiot_cloud.UI.base;
  */
 public interface BaseView {
 
+    /**
+     * 吐司消息
+     *
+     * @param message
+     */
+    void showMessage(String message);
 }

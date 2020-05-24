@@ -16,14 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoAction">
         <activity android:name=".test.glidetest.TestGlideActivity"></activity>
-        <activity android:name=".test.TestActivity">
+        <activity android:name=".UI.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".test.TestActivity"></activity>
         <activity android:name=".test.networktest.TestNetworkPackActivity">
+
         </activity>
         <activity android:name=".test.networktest.TestRxJavaActivity" />
         <activity android:name=".test.networktest.TestGsonActivity" />

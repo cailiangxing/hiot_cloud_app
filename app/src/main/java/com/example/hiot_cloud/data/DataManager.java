@@ -3,21 +3,11 @@ package com.example.hiot_cloud.data;
 import com.example.hiot_cloud.test.networktest.LoginResultDTO;
 import com.example.hiot_cloud.test.networktest.ResultBase;
 import com.example.hiot_cloud.test.networktest.UserBean;
-import com.example.hiot_cloud.utils.Constans;
+import com.example.hiot_cloud.utils.Constants;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Query;
 
 /**
  * 网络请求封装类
@@ -39,7 +29,7 @@ public class DataManager {
      * @return
      */
         public Observable<ResultBase<LoginResultDTO>> login(String userName, String password){
-            return service.login(userName,password, Constans.LOGIN_CODE_APP);
+            return service.login(userName, password, Constants.LOGIN_CODE_APP);
         }
 
         /**
@@ -74,7 +64,7 @@ public class DataManager {
             userBean.setUsername(userName);
             userBean.setPassword(password);
             userBean.setEmail(email);
-            userBean.setUserType(Constans.REGISTER_TYPE_NORMAL);
+            userBean.setUserType(Constants.REGISTER_TYPE_NORMAL);
 
             return service.register(userBean);
         }

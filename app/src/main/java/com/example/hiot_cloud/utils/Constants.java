@@ -3,7 +3,7 @@ package com.example.hiot_cloud.utils;
 /**
  * 常量类
  */
-public class Constans {
+public class Constants {
     /**
      * 活动页面数量
      */

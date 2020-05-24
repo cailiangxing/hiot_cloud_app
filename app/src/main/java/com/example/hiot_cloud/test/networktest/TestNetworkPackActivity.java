@@ -1,10 +1,6 @@
 package com.example.hiot_cloud.test.networktest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +12,6 @@ import com.example.hiot_cloud.UI.base.BasePresenter;
 import com.example.hiot_cloud.data.DataManager;
 
 import javax.inject.Inject;
-import javax.security.auth.login.LoginException;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 网络封装层测试类
@@ -66,7 +56,7 @@ public class TestNetworkPackActivity extends BaseActivity implements TestNetwork
         btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.updateEmail(etToken.getText().toString(),"apptest523@qq.com");
+                presenter.updateEmail(etToken.getText().toString(), "apptest524@qq.com");
             }
         });
         //注册
