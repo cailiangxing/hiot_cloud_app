@@ -33,4 +33,9 @@ public class Constants {
      *注册用户类型
      */
     public static final String REGISTER_TYPE_NORMAL = "1";
+
+    /**
+     * 服务端返回转态消息成功
+     */
+    public static final int MSG_STATUS_SUCCESS = 1;
 }

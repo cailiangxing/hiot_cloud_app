@@ -27,6 +27,7 @@ public class App extends Application {
         component.inject(this);
     }
 
+
     public ApplicationComponent component() {
         return component;
     }
