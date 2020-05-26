@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.hiot_cloud.R;
 import com.example.hiot_cloud.UI.base.BaseActivity;
 import com.example.hiot_cloud.UI.main.MainActivity;
+import com.example.hiot_cloud.UI.register.RegisterActivity;
 import com.example.hiot_cloud.utils.LoadingUtil;
 import com.example.hiot_cloud.utils.ValidatorUtils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,6 +34,9 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @BindView(R.id.btn_login)
     Button btnLogin;
+
+    @BindView(R.id.tv_link_signup)
+    TextView tvLinkSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +119,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         //跳转到主界面
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btn_login)
@@ -128,5 +134,12 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
             presenter.login(email, password);
 
         }
+    }
+
+    @OnClick(R.id.tv_link_signup)
+    public void onViewClicked() {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
