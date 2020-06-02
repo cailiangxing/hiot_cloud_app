@@ -24,18 +24,29 @@ public class Constants {
      * 主页viewpager消息fragment选择序号 mine
      */
     public static final int MAIN_VIEWPAGER_INDEX_MINE = 3;
+    /**
+     * APP登录的loginCode
+     */
+    public static final String LOGIN_CODE_APP = "app";
+    /**
+     * APP的注册用户类型
+     */
+    public static final String REGISTER_TYPE_NORAML = "1";
 
     /**
-     * APP登录标识
-     */
-    public static  final String LOGIN_CODE_APP = "app";
-    /**
-     *注册用户类型
-     */
-    public static final String REGISTER_TYPE_NORMAL = "1";
-
-    /**
-     * 服务端返回转态消息成功
+     * 服务端返回消息状态属性成功
      */
     public static final int MSG_STATUS_SUCCESS = 1;
+    /**
+     * 网络访问失败吐司
+     */
+    public static final String TOAST_MSG_NETWORK_FAIL = "当前网络无法访问，请稍后再试";
+    /**
+     * form-data类型
+     */
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+    /**
+     * token失效状态
+     */
+    public static final int MSG_STATUS_TOKEN_OUT = -100;
 }

@@ -6,22 +6,22 @@ import java.io.Serializable;
  * 用户对象
  */
 public class UserBean implements Serializable {
+
     /**
-     * 用户名
+     *
      */
     private String username;
-    /**
-     * 邮箱
-     */
+
     private String email;
-    /**
-     * 密码
-     */
+
     private String password;
-    /**
-     * 登录标识
-     */
+
     private String userType;
+
+    /**
+     * 用户头像相对路径
+     */
+    private String img;
 
     public String getUsername() {
         return username;
@@ -53,5 +53,13 @@ public class UserBean implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

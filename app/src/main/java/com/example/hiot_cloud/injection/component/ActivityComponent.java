@@ -19,6 +19,7 @@ package com.example.hiot_cloud.injection.component;
 import com.example.hiot_cloud.UI.login.LoginActivity;
 import com.example.hiot_cloud.UI.main.MainActivity;
 import com.example.hiot_cloud.UI.main.SplashActivity;
+import com.example.hiot_cloud.UI.mine.MineFragment;
 import com.example.hiot_cloud.UI.register.RegisterActivity;
 import com.example.hiot_cloud.injection.PerActivity;
 import com.example.hiot_cloud.injection.module.ActivityModule;
@@ -48,6 +49,8 @@ public interface ActivityComponent {
     void inject(SplashActivity activity);
 
     void inject(RegisterActivity activity);
+
+    void inject(MineFragment fragment);
 
     @Component.Builder
     interface ActivityComponentBuilder {

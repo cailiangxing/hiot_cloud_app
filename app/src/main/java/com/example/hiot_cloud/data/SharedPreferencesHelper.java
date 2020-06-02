@@ -7,10 +7,10 @@ import com.example.hiot_cloud.injection.ApplicationContext;
 
 import javax.inject.Inject;
 
-
 /**
- * SharedPreferences类
+ * SharedPreference类
  */
+
 public class SharedPreferencesHelper {
 
     private static final String PREF_FILE_NAME = "userconfig";
@@ -22,7 +22,6 @@ public class SharedPreferencesHelper {
 
     /**
      * 构造函数
-     *
      * @param context
      */
     @Inject
@@ -33,16 +32,14 @@ public class SharedPreferencesHelper {
 
     /**
      * 写入用户token
-     *
      * @param value
      */
-    public void setUserTOken(String value) {
+    public void setUserToken(String value) {
         mPref.edit().putString(PREF_KEY_USER_TOKEN, value).apply();
     }
 
     /**
      * 读取用户token
-     *
      * @return
      */
     public String getUserToken() {
