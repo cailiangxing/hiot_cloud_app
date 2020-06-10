@@ -1,0 +1,135 @@
+package com.example.hiot_cloud.UI.devicelist;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.example.hiot_cloud.R;
+import com.example.hiot_cloud.UI.base.BaseActivity;
+import com.example.hiot_cloud.UI.base.BaseFragment;
+import com.example.hiot_cloud.UI.scan.ScanActivity;
+import com.example.hiot_cloud.data.bean.DeviceBean;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class DeviceListFragment extends BaseFragment<DeviceListView, DeviceListPresenter> implements DeviceListView {
+
+    @Inject
+    DeviceListPresenter presenter;
+
+    @BindView(R.id.iv_add)
+    ImageView ivDeviceList;
+
+    @BindView(R.id.rv_device_list)
+    RecyclerView rvDeviceList;
+
+    @BindView(R.id.srl_device_list)
+    SwipeRefreshLayout srlDeviceList;
+
+    @BindView(R.id.tv_device_list_nodata)
+    TextView tvDeviceListNodata;
+    private DeviceListAdapter deviceListAdapter;
+
+    public static DeviceListFragment newInstance() {
+        DeviceListFragment fragment = new DeviceListFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public DeviceListPresenter createPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void injectDependencies() {
+        if (getActivity() instanceof BaseActivity) {
+            ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        }
+    }
+
+    @Override
+    public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_device_list, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initWidget();
+    }
+
+    @OnClick(R.id.iv_add)
+    public void onViewClicked() {
+        startActivityWithoutFinish(ScanActivity.class);
+    }
+
+
+    /**
+     * 初始化控件
+     */
+    private void initWidget() {
+        //初始化文档框
+        tvDeviceListNodata.setVisibility(View.VISIBLE);
+        //初始化下拉控件
+        srlDeviceList.setColorSchemeColors(
+                getResources().getColor(android.R.color.holo_blue_dark),
+                getResources().getColor(android.R.color.holo_red_dark),
+                getResources().getColor(android.R.color.holo_green_dark)
+        );
+        srlDeviceList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadDeviceLIst();
+            }
+        });
+
+        //初始化列表
+        rvDeviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvDeviceList.setHasFixedSize(true);
+        deviceListAdapter = new DeviceListAdapter(getActivity());
+        rvDeviceList.setAdapter(deviceListAdapter);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadDeviceLIst();
+    }
+
+    /**
+     * 加载设备列表
+     */
+    private void loadDeviceLIst() {
+        srlDeviceList.setRefreshing(true);
+        presenter.loadDeviceList();
+        srlDeviceList.setRefreshing(false);
+    }
+
+    @Override
+    public void showDeviceList(List<DeviceBean> deviceList) {
+        if (deviceList != null && !deviceList.isEmpty()) {
+            tvDeviceListNodata.setVisibility(View.GONE);
+        } else {
+            tvDeviceListNodata.setVisibility(View.VISIBLE);
+        }
+        deviceListAdapter.setData(deviceList);
+    }
+}

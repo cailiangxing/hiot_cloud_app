@@ -42,4 +42,13 @@ public class LoadingUtil {
 
     }
 
+    /**
+     * 销毁
+     */
+    public static void dismiss() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
 }

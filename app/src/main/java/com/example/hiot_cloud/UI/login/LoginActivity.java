@@ -21,6 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 登录模块活动类
+ */
+
+
 public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> implements LoginView {
 
     @Inject
@@ -35,6 +40,9 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     @BindView(R.id.btn_login)
     Button btnLogin;
 
+    /**
+     * 注册
+     */
     @BindView(R.id.tv_link_signup)
     TextView tvLinkSignup;
 
@@ -46,19 +54,16 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
 //        tiptetEmail = findViewById(R.id.tiptet_email);
 //        tiptetPassword = findViewById(R.id.tiptet_password);
-
 //        Button btnLogin = findViewById(R.id.btn_login);
 //        btnLogin.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                //如果校验成功，则保存登录状态，跳转到列表界面
 //                String email = tiptetEmail.getText().toString();
 //                String password = tiptetPassword.getText().toString();
-//
-//                //如果校验成功，则保存登录状态，跳转到列表界面
 //                if (ValidateSucc(email, password)) {
 //                    //请求服务端身份验证
-//                    LoadingUtil.showLoading(LoginActivity.this, "正在登录...");
+//                    LoadingUtil.showLoading(LoginActivity.this,"正在登录...");
 //                    presenter.login(email, password);
 //
 //                }
@@ -72,8 +77,9 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     }
 
     @Override
-    public void InjectIndependies() {
+    public void injectIndependies() {
         getActivityComponent().inject(this);
+
     }
 
     /**
@@ -84,6 +90,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
      * @return
      */
     private boolean ValidateSucc(String email, String password) {
+
 
         //校验邮箱非空
         if (TextUtils.isEmpty(email)) {
@@ -108,9 +115,6 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
             return false;
         }
 
-        //校验用户名密码正确
-
-
         return true;
     }
 
@@ -120,14 +124,14 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+
     }
 
     @OnClick(R.id.btn_login)
     public void onClick(View view) {
+        //如果校验成功，则保存登录状态，跳转到列表界面
         String email = tiptetEmail.getText().toString();
         String password = tiptetPassword.getText().toString();
-
-        //如果校验成功，则保存登录状态，跳转到列表界面
         if (ValidateSucc(email, password)) {
             //请求服务端身份验证
             LoadingUtil.showLoading(LoginActivity.this, "正在登录...");
@@ -138,8 +142,13 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @OnClick(R.id.tv_link_signup)
     public void onViewClicked() {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showMessage(String message) {
+
     }
 }

@@ -1,22 +1,24 @@
- package com.example.hiot_cloud.UI.main;
+package com.example.hiot_cloud.UI.main;
 
- import android.os.Bundle;
- import android.widget.RadioGroup;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.RadioGroup;
 
- import androidx.fragment.app.FragmentPagerAdapter;
- import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
- import com.example.hiot_cloud.R;
- import com.example.hiot_cloud.UI.base.BaseActivity;
- import com.example.hiot_cloud.UI.base.BasePresenter;
- import com.example.hiot_cloud.utils.Constants;
+import com.example.hiot_cloud.R;
+import com.example.hiot_cloud.UI.base.BaseActivity;
+import com.example.hiot_cloud.UI.base.BasePresenter;
+import com.example.hiot_cloud.utils.Constants;
 
- public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("tag", "test");
 
         //设置Viewpager
         final ViewPager vpMain = findViewById(R.id.vp_main);
@@ -26,8 +28,8 @@
         RadioGroup rgMain = findViewById(R.id.rg_main);
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
                     case R.id.rb_message:
                         vpMain.setCurrentItem(Constants.MAIN_VIEWPAGER_INDEX_MESSAGE);
                         break;
@@ -41,19 +43,18 @@
                         vpMain.setCurrentItem(Constants.MAIN_VIEWPAGER_INDEX_MINE);
                         break;
                         default:
-
                 }
             }
         });
     }
 
-     @Override
-     public BasePresenter createPresenter() {
-         return null;
-     }
+    @Override
+    public BasePresenter createPresenter() {
+        return null;
+    }
 
-     @Override
-     public void InjectIndependies() {
+    @Override
+    public void injectIndependies() {
         getActivityComponent().inject(this);
-     }
- }
+    }
+}

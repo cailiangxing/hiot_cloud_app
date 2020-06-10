@@ -4,9 +4,9 @@ import android.text.TextUtils;
 
 import com.example.hiot_cloud.UI.base.BasePresenter;
 import com.example.hiot_cloud.data.DataManager;
+import com.example.hiot_cloud.data.bean.UserBean;
 import com.example.hiot_cloud.test.networktest.LoginResultDTO;
 import com.example.hiot_cloud.test.networktest.ResultBase;
-import com.example.hiot_cloud.test.networktest.UserBean;
 import com.example.hiot_cloud.utils.Constants;
 
 import javax.inject.Inject;

@@ -3,6 +3,7 @@ package com.example.hiot_cloud.UI.register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import butterknife.OnClick;
 public class RegisterActivity extends BaseActivity<RegisterView, RegisterPresenter> implements RegisterView {
 
     @BindView(R.id.tiptet_user_name)
-    TextInputEditText tiptetUserName;
+    TextInputEditText tiptetuserName;
 
     @BindView(R.id.tiptet_email)
     TextInputEditText tiptetEmail;
@@ -37,18 +38,10 @@ public class RegisterActivity extends BaseActivity<RegisterView, RegisterPresent
     Button btnRegister;
 
     @BindView(R.id.tv_link_login)
-    TextView tvLinkLogin;
+    TextView tvLinkSignup;
 
     @Inject
     RegisterPresenter presenter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
-
-    }
 
     @Override
     public RegisterPresenter createPresenter() {
@@ -56,9 +49,19 @@ public class RegisterActivity extends BaseActivity<RegisterView, RegisterPresent
     }
 
     @Override
-    public void InjectIndependies() {
+    public void injectIndependies() {
         getActivityComponent().inject(this);
+
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
+    }
+
+
 
     /**
      * 校验用户输入
@@ -67,18 +70,18 @@ public class RegisterActivity extends BaseActivity<RegisterView, RegisterPresent
      * @param password
      * @return
      */
-    private boolean ValidateSucc(String userName, String email, String password) {
-
+    private boolean ValidateSucc(String uerName, String email, String password) {
         //校验用户名非空
-        if (TextUtils.isEmpty(userName)) {
-            tiptetUserName.setError("用户名不能为空，请重新输入");
+        if (TextUtils.isEmpty(email)) {
+            tiptetuserName.setError("用户名不能为空，请重新输入");
             return false;
         }
         //校验用户名合规
-        if (!ValidatorUtils.isEmail(userName)) {
-            tiptetUserName.setError("用户名输入不正确，请重新输入");
+        if (!ValidatorUtils.isEmail(email)) {
+            tiptetuserName.setError("用户名输入不正确，请重新输入");
             return false;
         }
+
 
         //校验邮箱非空
         if (TextUtils.isEmpty(email)) {
@@ -103,37 +106,36 @@ public class RegisterActivity extends BaseActivity<RegisterView, RegisterPresent
             return false;
         }
 
-        //校验用户名密码正确
-
-
         return true;
     }
 
-    @OnClick(R.id.btn_register)
-    public void onBtnRegisterClicked() {
-        //注册操作
-        String userName = tiptetUserName.getText().toString();
-        String password = tiptetPassword.getText().toString();
-        String email = tiptetEmail.getText().toString();
-        presenter.register(userName, password, email);
-    }
 
-    @OnClick(R.id.tv_link_login)
-    public void onTvLinkLoginClicked() {
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+    @OnClick({R.id.btn_register, R.id.tv_link_login})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_register:
+                //注册操作
+                String userName = tiptetuserName.getText().toString();
+                String password = tiptetPassword.getText().toString();
+                String email = tiptetEmail.getText().toString();
+                presenter.register(userName, password, email);
+                break;
+            case R.id.tv_link_login:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 
     @Override
     public void registerSucc(String email, String password) {
-
+        //注册成功后，做自动登录
         presenter.login(email, password);
     }
 
     @Override
     public void loginSucc() {
-        //跳转到主界面
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

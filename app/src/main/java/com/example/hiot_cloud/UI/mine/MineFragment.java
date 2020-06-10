@@ -18,7 +18,7 @@ import com.example.hiot_cloud.R;
 import com.example.hiot_cloud.UI.base.BaseActivity;
 import com.example.hiot_cloud.UI.base.BaseFragment;
 import com.example.hiot_cloud.UI.login.LoginActivity;
-import com.example.hiot_cloud.test.networktest.UserBean;
+import com.example.hiot_cloud.data.bean.UserBean;
 import com.example.hiot_cloud.utils.ImageUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -37,24 +37,30 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MineFragment extends BaseFragment<MineView, MinePresenter> implements MineView {
+
     @Inject
     MinePresenter presenter;
+
     @BindView(R.id.iv_head_image)
     ImageView ivHeadImage;
+
     @BindView(R.id.tv_user_center_nickname)
     TextView tvUserCenterNickname;
+
     @BindView(R.id.tv_user_center_email)
     TextView tvUserCenterEmail;
+
     @BindView(R.id.tv_user_center_update_password)
     TextView tvUserCenterUpdatePassword;
+
     @BindView(R.id.tv_user_center_update_email)
     TextView tvUserCenterUpdateEmail;
+
     @BindView(R.id.btn_logout)
     Button btnLogout;
 
     /**
      * 创建fragment实例
-     *
      * @return
      */
     public static MineFragment newInstance() {
@@ -71,8 +77,10 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
 
     @Override
     public void injectDependencies() {
-        if (getActivity() instanceof BaseActivity)
+        if (getActivity() instanceof BaseActivity) {
             ((BaseActivity) getActivity()).getActivityComponent().inject(this);
+        }
+
     }
 
     @Override
@@ -86,6 +94,7 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.loadUserInfo();
+
     }
 
     @OnClick({R.id.iv_head_image, R.id.tv_user_center_update_password, R.id.tv_user_center_update_email, R.id.btn_logout})
@@ -119,13 +128,15 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
                 new AcpListener() {
                     @Override
                     public void onGranted() {
-                        //用户同意授权，选择图片
+                        //用户授权同意，选择图片
                         ChoosePicture();
+
                     }
 
                     @Override
                     public void onDenied(List<String> permissions) {
                         showMessage("用户拒绝授权");
+
                     }
                 }
         );
@@ -135,6 +146,7 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
      * 选择图片
      */
     private void ChoosePicture() {
+//        Picture
         PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 //.theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
@@ -181,16 +193,17 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_CANCELED) {
+        if (requestCode == Activity.RESULT_CANCELED) {
             showMessage("用户取消");
         }
-        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == Activity.RESULT_OK) {
             if (requestCode == PictureConfig.CHOOSE_REQUEST) {
                 List<LocalMedia> ImageList = PictureSelector.obtainMultipleResult(data);
-                if (ImageList != null && !ImageList.isEmpty()) {
+                if (ImageList != null && ImageList.isEmpty()) {
                     String filePath = ImageList.get(0).getCompressPath();
                     presenter.uploadImage(filePath);
                 }
+
             }
         }
     }
@@ -202,10 +215,12 @@ public class MineFragment extends BaseFragment<MineView, MinePresenter> implemen
         tvUserCenterNickname.setText(userBean.getUsername());
     }
 
+
     @Override
     public void refreshUserHead(String url) {
         ImageUtils.showCircle(getActivity(), ivHeadImage, ImageUtils.getFullUrl(url));
     }
+
 
     @Override
     public void tokenOut() {

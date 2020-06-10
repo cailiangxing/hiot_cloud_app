@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hiot_cloud.UI.main.MainActivity;
 import com.example.hiot_cloud.R;
 import com.example.hiot_cloud.UI.base.BaseActivity;
+import com.example.hiot_cloud.UI.main.MainActivity;
 import com.example.hiot_cloud.test.MVPtest.model.User;
 
 import javax.inject.Inject;
@@ -54,7 +54,7 @@ public class TestMvpActivity extends BaseActivity<TestView,TestPresenter> implem
     }
 
     @Override
-    public void InjectIndependies() {
+    public void injectIndependies() {
         getActivityComponent().inject(this);
     }
 

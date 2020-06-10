@@ -1,5 +1,6 @@
 package com.example.hiot_cloud.UI.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-/**
- * Fragment模板类
- */
-public abstract class BaseFragment<V extends BaseView,P extends BasePresenter<V>>  extends Fragment implements BaseView {
+import com.example.hiot_cloud.UI.login.LoginActivity;
 
+import butterknife.ButterKnife;
+
+public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V>> extends Fragment implements BaseView {
     private P presenter;
 
     public abstract P createPresenter();
@@ -31,20 +32,19 @@ public abstract class BaseFragment<V extends BaseView,P extends BasePresenter<V>
         return view;
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         presenter = createPresenter();
-        if(presenter != null){
+        if (presenter != null) {
             presenter.setView((V) this);
         }
+        ButterKnife.bind(this, view);
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -56,12 +56,39 @@ public abstract class BaseFragment<V extends BaseView,P extends BasePresenter<V>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
     public void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 打开新界面，关闭本界面
+     *
+     * @param cls
+     */
+    protected void startActivity(Class<?> cls) {
+        Intent intent = new Intent(getActivity(), cls);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    /**
+     * 打开新界面，不关闭本界面
+     *
+     * @param cls
+     */
+    protected void startActivityWithoutFinish(Class<?> cls) {
+        Intent intent = new Intent(getActivity(), cls);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    @Override
+    public void tokenOut() {
+        startActivity(LoginActivity.class);
     }
 }

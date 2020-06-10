@@ -70,7 +70,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public void InjectIndependies() {
+    public void injectIndependies() {
         getActivityComponent().inject(this);
     }
+
 }

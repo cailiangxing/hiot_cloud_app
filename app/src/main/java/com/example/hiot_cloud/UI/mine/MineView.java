@@ -2,7 +2,7 @@ package com.example.hiot_cloud.UI.mine;
 
 
 import com.example.hiot_cloud.UI.base.BaseView;
-import com.example.hiot_cloud.test.networktest.UserBean;
+import com.example.hiot_cloud.data.bean.UserBean;
 
 /**
  * 用户中心View层接口

@@ -1,7 +1,5 @@
 package com.example.hiot_cloud.test.networktest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.hiot_cloud.R;
+import com.example.hiot_cloud.data.bean.UserBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,7 +19,6 @@ import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;

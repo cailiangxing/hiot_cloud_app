@@ -1,8 +1,9 @@
 package com.example.hiot_cloud.test.networktest;
 
+import com.example.hiot_cloud.data.bean.UserBean;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

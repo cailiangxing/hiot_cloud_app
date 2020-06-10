@@ -16,7 +16,7 @@ import javax.inject.Inject;
 /**
  * 网络封装层测试类
  */
-public class TestNetworkPackActivity extends BaseActivity implements TestNetworkPackView{
+public class TestNetworkPackActivity extends BaseActivity implements TestNetworkPackView {
 
     private static final String TAG = "TestNetworkPackActivity";
     private EditText etToken;
@@ -26,6 +26,7 @@ public class TestNetworkPackActivity extends BaseActivity implements TestNetwork
 
     @Inject
     TestNetworkPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,44 +40,60 @@ public class TestNetworkPackActivity extends BaseActivity implements TestNetwork
         Button btnLogin = findViewById(R.id.btn_network_pack_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                presenter.login("clxtest","clxtest");
+            public void onClick(View view) {
+                presenter.login("wlwysp2", "abc123");
+                login("wlwysp2", "abc123");
+
             }
         });
+
+
         //用户信息
         Button btnUserInfo = findViewById(R.id.btn_network_pack_userinfo);
         btnUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 presenter.getUserInfo(etToken.getText().toString());
+
+
             }
         });
+
         //修改邮箱
         Button btnUpdateEmail = findViewById(R.id.btn_network_pack_update_email);
         btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                presenter.updateEmail(etToken.getText().toString(), "apptest524@qq.com");
+            public void onClick(View view) {
+                presenter.updateEmail(etToken.getText().toString(), "ysp12@qq.com");
+
+
             }
         });
+
         //注册
         Button btnRegister = findViewById(R.id.btn_network_pack_register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                presenter.register("clxtest","clx333","clx333@qq.com");
+            public void onClick(View view) {
+                presenter.register("wlwysp5", "abc123", "wlwysp5@qq.com");
+
+
             }
         });
+
+
     }
 
     @Override
     public BasePresenter createPresenter() {
+
         return presenter;
     }
 
     @Override
-    public void InjectIndependies() {
+    public void injectIndependies() {
         getActivityComponent().inject(this);
+
     }
 
     /**
@@ -84,38 +101,43 @@ public class TestNetworkPackActivity extends BaseActivity implements TestNetwork
      * @param userName
      * @param password
      */
+
     private void login(String userName, String password) {
-//        dataManager.login(userName,password)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Observer<ResultBase<LoginResultDTO>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(ResultBase<LoginResultDTO> resultBase)
-//                    {
-//                        if (resultBase != null && resultBase.getData() != null){
-//                        etToken.setText(resultBase.getData().getTokenValue());
-//                        }else if (resultBase != null && !TextUtils.isEmpty(resultBase.getMsg())){
-//                            Toast.makeText(TestNetworkPackActivity.this, resultBase.getMsg(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "onError: ",e );
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
+/*        dataManager.login(userName, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultBase<LoginResultDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultBase<LoginResultDTO> resultBase) {
+                        if (resultBase != null && resultBase.getData() != null) {
+                            etToken.setText(resultBase.getData().getTokenValue());
+                        }else if (resultBase != null && !TextUtils.isEmpty(resultBase.getMsg())){
+                            Toast.makeText(TestNetworkPackActivity.this, resultBase.getMsg(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onNext: "+resultBase.getMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: ", e);
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });*/
+
     }
+
 
     @Override
     public void showToken(String token) {
@@ -125,5 +147,6 @@ public class TestNetworkPackActivity extends BaseActivity implements TestNetwork
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 }

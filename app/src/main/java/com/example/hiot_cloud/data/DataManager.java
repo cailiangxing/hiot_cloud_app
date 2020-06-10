@@ -1,11 +1,13 @@
 package com.example.hiot_cloud.data;
 
+import com.example.hiot_cloud.data.bean.DeviceBean;
+import com.example.hiot_cloud.data.bean.UserBean;
 import com.example.hiot_cloud.test.networktest.LoginResultDTO;
 import com.example.hiot_cloud.test.networktest.ResultBase;
-import com.example.hiot_cloud.test.networktest.UserBean;
 import com.example.hiot_cloud.utils.Constants;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,7 +25,6 @@ public class DataManager {
     private NetworkService service;
 
     SharedPreferencesHelper sharedPreferencesHelper;
-
     @Inject
     public DataManager(NetworkService service, SharedPreferencesHelper sharedPreferencesHelper) {
         this.service = service;
@@ -48,48 +49,53 @@ public class DataManager {
                         }
                     }
                 });
+
     }
+
 
     /**
      * 获取用户信息
-     *
      * @return
      */
+
     public Observable<ResultBase<UserBean>> getUserInfo() {
         return service.getUserInfo(sharedPreferencesHelper.getUserToken());
+
     }
+
 
     /**
      * 修改邮箱
-     *
      * @param email
      * @return
      */
 
     public Observable<ResultBase<String>> updateEmail(String email) {
         return service.updateEmail(sharedPreferencesHelper.getUserToken(), email);
+
     }
 
     /**
      * 注册
-     * @param userName 用户名
+     * @param username 用户名
      * @param password 密码
      * @param email 邮箱地址
      * @return
      */
-    public Observable<ResultBase<UserBean>> register(String userName, String password, String email) {
+
+    public Observable<ResultBase<UserBean>> register(String username, String password, String email) {
 
         UserBean userBean = new UserBean();
-        userBean.setUsername(userName);
+        userBean.setUsername(username);
         userBean.setPassword(password);
         userBean.setEmail(email);
-        userBean.setUserType(Constants.REGISTER_TYPE_NORAML);
+        userBean.setUserType(Constants.REGISTER_TYPE_NORMAL);
         return service.register(userBean);
+
     }
 
     /**
      * 上传图片
-     *
      * @param filePath
      */
     public Observable<ResultBase<String>> uploadImage(String filePath) {
@@ -110,5 +116,27 @@ public class DataManager {
                         sharedPreferencesHelper.setUserToken("");
                     }
                 });
+    }
+
+    /**
+     * 设备绑定
+     *
+     * @param deviceId
+     * @return
+     */
+    public Observable<ResultBase> bindDevice(String deviceId) {
+        return service.bindDevice(deviceId, sharedPreferencesHelper.getUserToken());
+
+    }
+
+    /**
+     * 获取指定绑定状态的设备类型
+     *
+     * @param bonding
+     * @return
+     */
+    public Observable<ResultBase<List<DeviceBean>>> listBindedDevice(int bonding) {
+        return service.listBindedDevice(bonding, sharedPreferencesHelper.getUserToken());
+        //return service.listBindedDevice(bonding,sharedPreferencesHelper.getUserToken());
     }
 }
