@@ -36,6 +36,7 @@
         <activity android:name=".test.networktest.TestRetrofitActivity" />
         <activity android:name=".test.networktest.TestOkHttpActivity" />
         <activity android:name=".test.lifecycletest.TestLifeCycleActivity" />
+        <activity android:name=".UI.devicedetail.DeviceDetailActivity" />
         <activity android:name=".test.MVPtest.TestMvpActivity" />
         <activity android:name=".UI.main.SplashActivity">
             <intent-filter>

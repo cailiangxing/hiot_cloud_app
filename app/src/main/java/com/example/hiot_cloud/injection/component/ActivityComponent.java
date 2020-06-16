@@ -16,6 +16,7 @@
 package com.example.hiot_cloud.injection.component;
 
 
+import com.example.hiot_cloud.UI.devicedetail.DeviceDetailActivity;
 import com.example.hiot_cloud.UI.devicelist.DeviceListFragment;
 import com.example.hiot_cloud.UI.login.LoginActivity;
 import com.example.hiot_cloud.UI.main.MainActivity;
@@ -57,6 +58,8 @@ public interface ActivityComponent {
     void inject(ScanActivity activity);
 
     void inject(DeviceListFragment fragment);
+
+    void inject(DeviceDetailActivity activity);
 
 
     @Component.Builder

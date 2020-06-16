@@ -1,5 +1,6 @@
 package com.example.hiot_cloud.UI.devicelist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.hiot_cloud.R;
 import com.example.hiot_cloud.UI.base.BaseActivity;
 import com.example.hiot_cloud.UI.base.BaseFragment;
+import com.example.hiot_cloud.UI.devicedetail.DeviceDetailActivity;
 import com.example.hiot_cloud.UI.scan.ScanActivity;
 import com.example.hiot_cloud.data.bean.DeviceBean;
+import com.example.hiot_cloud.utils.Constants;
 
 import java.util.List;
 
@@ -26,6 +29,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 设备Fragment类
+ */
 public class DeviceListFragment extends BaseFragment<DeviceListView, DeviceListPresenter> implements DeviceListView {
 
     @Inject
@@ -34,16 +40,23 @@ public class DeviceListFragment extends BaseFragment<DeviceListView, DeviceListP
     @BindView(R.id.iv_add)
     ImageView ivDeviceList;
 
-    @BindView(R.id.rv_device_list)
-    RecyclerView rvDeviceList;
 
     @BindView(R.id.srl_device_list)
     SwipeRefreshLayout srlDeviceList;
 
     @BindView(R.id.tv_device_list_nodata)
     TextView tvDeviceListNodata;
+
+    @BindView(R.id.rv_device_list)
+    RecyclerView rvDeciveList;
+
     private DeviceListAdapter deviceListAdapter;
 
+    /**
+     * 创建fragment实例
+     *
+     * @return
+     */
     public static DeviceListFragment newInstance() {
         DeviceListFragment fragment = new DeviceListFragment();
         Bundle args = new Bundle();
@@ -80,44 +93,52 @@ public class DeviceListFragment extends BaseFragment<DeviceListView, DeviceListP
         startActivityWithoutFinish(ScanActivity.class);
     }
 
-
     /**
      * 初始化控件
      */
     private void initWidget() {
-        //初始化文档框
+        //初始化文本框
         tvDeviceListNodata.setVisibility(View.VISIBLE);
         //初始化下拉控件
         srlDeviceList.setColorSchemeColors(
-                getResources().getColor(android.R.color.holo_blue_dark),
+                getResources().getColor(android.R.color.holo_orange_dark),
                 getResources().getColor(android.R.color.holo_red_dark),
                 getResources().getColor(android.R.color.holo_green_dark)
         );
         srlDeviceList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadDeviceLIst();
+                loadDeviceList();
             }
         });
-
         //初始化列表
-        rvDeviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvDeviceList.setHasFixedSize(true);
+        rvDeciveList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvDeciveList.setHasFixedSize(true);
         deviceListAdapter = new DeviceListAdapter(getActivity());
-        rvDeviceList.setAdapter(deviceListAdapter);
+        deviceListAdapter.setOnItemClickListener(new DeviceListAdapter.OnItemClickListener() {
+            @Override
+            public void onClickListener(DeviceBean bean) {
+                if (bean == null) {
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), DeviceDetailActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_DEVICE_ID, bean.getId());
+                startActivity(intent);
+            }
+        });
+        rvDeciveList.setAdapter(deviceListAdapter);
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
-        loadDeviceLIst();
+        loadDeviceList();
     }
 
     /**
      * 加载设备列表
      */
-    private void loadDeviceLIst() {
+    private void loadDeviceList() {
         srlDeviceList.setRefreshing(true);
         presenter.loadDeviceList();
         srlDeviceList.setRefreshing(false);

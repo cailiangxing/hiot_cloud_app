@@ -1,6 +1,8 @@
 package com.example.hiot_cloud.data;
 
+
 import com.example.hiot_cloud.data.bean.DeviceBean;
+import com.example.hiot_cloud.data.bean.DeviceDetailBean;
 import com.example.hiot_cloud.data.bean.UserBean;
 import com.example.hiot_cloud.test.networktest.LoginResultDTO;
 import com.example.hiot_cloud.test.networktest.ResultBase;
@@ -30,7 +32,6 @@ public class DataManager {
         this.service = service;
         this.sharedPreferencesHelper = sharedPreferencesHelper;
     }
-
     /**
      * 登录
      * @param userName
@@ -43,59 +44,62 @@ public class DataManager {
                     @Override
                     public void accept(ResultBase<LoginResultDTO> resultBase) throws Exception {
                         if (resultBase.getStatus() == Constants.MSG_STATUS_SUCCESS) {
+                            //如果登录身份正确，弹出登录成功，跳转到主界面
                             if (resultBase != null && resultBase.getData() != null) {
                                 sharedPreferencesHelper.setUserToken(resultBase.getData().getTokenValue());
                             }
                         }
                     }
                 });
-
     }
-
-
     /**
-     * 获取用户信息
+     * 用户信息
      * @return
      */
-
     public Observable<ResultBase<UserBean>> getUserInfo() {
         return service.getUserInfo(sharedPreferencesHelper.getUserToken());
-
     }
-
 
     /**
      * 修改邮箱
      * @param email
      * @return
      */
-
     public Observable<ResultBase<String>> updateEmail(String email) {
         return service.updateEmail(sharedPreferencesHelper.getUserToken(), email);
+    }
 
+    /**
+     * 修改密码
+     *
+     * @param oldpassword
+     * @param newpassword
+     * @param confirmpassword
+     * @return
+     */
+    public Observable<ResultBase<String>> updatePassword(String oldpassword, String newpassword, String confirmpassword) {
+        return service.updatePassword(oldpassword, newpassword, confirmpassword, sharedPreferencesHelper.getUserToken());
     }
 
     /**
      * 注册
-     * @param username 用户名
+     * @param userName 用户名
      * @param password 密码
-     * @param email 邮箱地址
+     * @param email 邮箱
      * @return
      */
-
-    public Observable<ResultBase<UserBean>> register(String username, String password, String email) {
-
+    public Observable<ResultBase<UserBean>> register(String userName, String password, String email) {
         UserBean userBean = new UserBean();
-        userBean.setUsername(username);
+        userBean.setUsername(userName);
         userBean.setPassword(password);
         userBean.setEmail(email);
-        userBean.setUserType(Constants.REGISTER_TYPE_NORMAL);
+        userBean.setUserType(Constants.REGISTER_TYPE_NOMAL);
         return service.register(userBean);
-
     }
 
     /**
      * 上传图片
+     *
      * @param filePath
      */
     public Observable<ResultBase<String>> uploadImage(String filePath) {
@@ -126,17 +130,37 @@ public class DataManager {
      */
     public Observable<ResultBase> bindDevice(String deviceId) {
         return service.bindDevice(deviceId, sharedPreferencesHelper.getUserToken());
-
     }
 
     /**
-     * 获取指定绑定状态的设备类型
+     * 获取指定绑定状态的设备类别
      *
      * @param bonding
      * @return
      */
     public Observable<ResultBase<List<DeviceBean>>> listBindedDevice(int bonding) {
         return service.listBindedDevice(bonding, sharedPreferencesHelper.getUserToken());
-        //return service.listBindedDevice(bonding,sharedPreferencesHelper.getUserToken());
     }
+
+    /**
+     * 获取设备详情
+     *
+     * @param deviceId
+     * @return
+     */
+    public Observable<ResultBase<DeviceDetailBean>> getDeviceDetail(String deviceId) {
+        return service.getDeviceDetail(deviceId, sharedPreferencesHelper.getUserToken());
+    }
+
+    /**
+     * 控制开关通道状态
+     *
+     * @param dataStreamId
+     * @param status
+     * @return
+     */
+    public Observable<ResultBase> changeSwitch(String dataStreamId, int status) {
+        return service.changeSwitch(dataStreamId, status, sharedPreferencesHelper.getUserToken());
+    }
+
 }

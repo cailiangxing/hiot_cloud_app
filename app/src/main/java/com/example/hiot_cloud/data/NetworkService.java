@@ -1,6 +1,7 @@
 package com.example.hiot_cloud.data;
 
 import com.example.hiot_cloud.data.bean.DeviceBean;
+import com.example.hiot_cloud.data.bean.DeviceDetailBean;
 import com.example.hiot_cloud.data.bean.UserBean;
 import com.example.hiot_cloud.test.networktest.LoginResultDTO;
 import com.example.hiot_cloud.test.networktest.ResultBase;
@@ -20,13 +21,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
- * 网络请求接口
+ *网络请求接口
  */
-
 public interface NetworkService {
 
-    public static final String BASE_URL = "http://114.67.88.191:8080/";
-
+    public static final String BASE_URL = "http://114.67.88.191:8080";
     /**
      * 登录
      * @param userName
@@ -35,19 +34,33 @@ public interface NetworkService {
      * @return
      */
     @POST("/auth/login")
-    Observable<ResultBase<LoginResultDTO>> login(@Query("username") String userName, @Query("password") String password, @Query("loginCode") String loginCode);
+    Observable<ResultBase<LoginResultDTO>> login(@Query("username") String userName, @Query("password") String password,
+                                                 @Query("loginCode") String loginCode);
 
-
+    /**
+     * 注销
+     *
+     * @param authorization
+     * @return
+     */
     @POST("/auth/logout")
     Observable<ResultBase> logout(@Header("Authorization") String authorization);
+
+//    @POST("/auth/login")
+//    @FormUrlEncoded
+//    Call<ResponseBody> login2(@Field("username") String userName, @Field("password") String password,
+//                              @Field("loginCode") String loginCode);
+
     /**
-     * 获取用户信息
+     * 用户信息
      * @param authorization
      * @return
      */
     @GET("/user/one")
     Observable<ResultBase<UserBean>> getUserInfo(@Header("Authorization") String authorization);
-
+//
+//    @GET("/user/one")
+//    Call<ResultBase<UserBean>> getUserInfo2(@Header("Authorization")String authorization);
 
     /**
      * 修改邮箱
@@ -56,7 +69,15 @@ public interface NetworkService {
      * @return
      */
     @PUT("/user/email")
-    Observable<ResultBase<String>> updateEmail(@Header("Authorization") String authorization, @Query("email") String email);
+    Observable<ResultBase<String>> updateEmail(@Header("Authorization") String authorization,
+                                               @Query("email") String email);
+
+
+    @PUT("/user/password")
+    Observable<ResultBase<String>> updatePassword(@Query("oldpassword") String oldpassword,
+                                                  @Query("newpassword") String newpassword,
+                                                  @Query("confirmpassword") String confirmpassword,
+                                                  @Header("Authorization") String authorization);
 
     /**
      * 注册
@@ -68,7 +89,8 @@ public interface NetworkService {
 
     @POST("/user/img")
     @Multipart
-    Observable<ResultBase<String>> uploadImage(@Part MultipartBody.Part file, @Header("Authorization") String authorization);
+    Observable<ResultBase<String>> uploadImage(@Part MultipartBody.Part file,
+                                               @Header("Authorization") String authorization);
 
     /**
      * 绑定设备
@@ -78,8 +100,27 @@ public interface NetworkService {
      * @return
      */
     @POST("/holder/device/{device_pk}")
-    Observable<ResultBase> bindDevice(@Path("device_pk") String device_pk, @Header("Authorization") String authorization);
+    Observable<ResultBase> bindDevice(@Path("device_pk") String device_pk,
+                                      @Header("Authorization") String authorization);
 
     @GET("/holder/user")
-    Observable<ResultBase<List<DeviceBean>>> listBindedDevice(@Query("bonding") int bonding, @Header("Authorization") String authorization);
+    Observable<ResultBase<List<DeviceBean>>> listBindedDevice(@Query("bonding") int bonding,
+                                                              @Header("Authorization") String authorization);
+
+    @GET("/device/{id}")
+    Observable<ResultBase<DeviceDetailBean>> getDeviceDetail(@Path("id") String deviceId,
+                                                             @Header("Authorization") String authorization);
+
+    /**
+     * 控制通道开关
+     *
+     * @param dataStreamId
+     * @param status
+     * @param authorization
+     * @return
+     */
+    @POST("/downdatastream/switch/{downdatastream_pk}")
+    Observable<ResultBase> changeSwitch(@Path("downdatastream_pk") String dataStreamId,
+                                        @Query("status") int status,
+                                        @Header("Authorization") String authorization);
 }

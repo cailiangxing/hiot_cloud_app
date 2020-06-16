@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.ViewHolder> {
 
     private Context context;
+
     private OnItemClickListener onItemClickListener;
 
     private List<DeviceBean> dataList = new ArrayList<>();
@@ -92,13 +93,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_device)
         ImageView ivDevice;
-
         @BindView(R.id.tv_title)
         TextView tvTitle;
-
         @BindView(R.id.tv_desc)
         TextView tvDesc;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,7 +115,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
                 tvDesc.setText(bean.getDescription());
                 ImageUtils.show(context, ivDevice, ImageUtils.getFullUrl(bean.getDeviceimg()));
             }
-
         }
     }
 
@@ -128,7 +125,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
         void onClickListener(DeviceBean bean);
     }
 
-
     /**
      * 提供点击实现类方法
      *
@@ -137,5 +133,4 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-
 }
