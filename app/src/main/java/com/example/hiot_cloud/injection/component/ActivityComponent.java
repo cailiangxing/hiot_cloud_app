@@ -18,12 +18,14 @@ package com.example.hiot_cloud.injection.component;
 
 import com.example.hiot_cloud.UI.devicedetail.DeviceDetailActivity;
 import com.example.hiot_cloud.UI.devicelist.DeviceListFragment;
+import com.example.hiot_cloud.UI.gpsdatastreamhistory.GpsDataStreamHistoryActivity;
 import com.example.hiot_cloud.UI.login.LoginActivity;
 import com.example.hiot_cloud.UI.main.MainActivity;
 import com.example.hiot_cloud.UI.main.SplashActivity;
 import com.example.hiot_cloud.UI.mine.MineFragment;
 import com.example.hiot_cloud.UI.register.RegisterActivity;
 import com.example.hiot_cloud.UI.scan.ScanActivity;
+import com.example.hiot_cloud.UI.switchdatastreamhistory.LineChartActivity;
 import com.example.hiot_cloud.injection.PerActivity;
 import com.example.hiot_cloud.injection.module.ActivityModule;
 import com.example.hiot_cloud.test.MVPtest.TestMvpActivity;
@@ -61,6 +63,9 @@ public interface ActivityComponent {
 
     void inject(DeviceDetailActivity activity);
 
+    void inject(LineChartActivity activity);
+
+    void inject(GpsDataStreamHistoryActivity activity);
 
     @Component.Builder
     interface ActivityComponentBuilder {

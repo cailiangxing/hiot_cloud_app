@@ -1,6 +1,6 @@
 package com.example.hiot_cloud;
 
-import android.app.Application;
+import androidx.multidex.MultiDexApplication;
 
 import com.example.hiot_cloud.injection.component.ApplicationComponent;
 import com.example.hiot_cloud.injection.component.DaggerApplicationComponent;
@@ -10,7 +10,7 @@ import com.example.hiot_cloud.injection.module.ApplicationModule;
  * 所有程序的入口
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private ApplicationComponent component;
 
@@ -26,7 +26,6 @@ public class App extends Application {
                 .build();
         component.inject(this);
     }
-
 
     public ApplicationComponent component() {
         return component;
